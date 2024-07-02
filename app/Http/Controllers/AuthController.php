@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\SendVerificationEmailRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
@@ -40,17 +42,32 @@ class AuthController extends Controller
         return new JsonResource(['user' => new UserResource($user), 'token' => $token]);
     }
 
-    public function verifyEmail(Request $request)
+    public function sendVerificationEmail(SendVerificationEmailRequest $request)
     {
-        // Logic for verifying user
+
+      try {
+        $this->authService->sendVerificationEmail($request->user());
+        return $this->success("Verification email sent successfully");
+      } catch (\Throwable $th) {
+        return $this->error("There is error sending verification email", 500);
+      }
     }
 
-    public function forgetPassword(Request $request)
+    public function verifyPinEmail(string $pin, Request $request)
     {
-        // Logic for password recovery
+        $verified = $this->authService->verifyPinEmail($pin, $request->user());
+        if (!$verified){
+            return $this->error('Invalid pin, please try again',404);
+        }
+        return $this->success("Email verified successfully");
     }
 
-    public function resetPassword(Request $request)
+    public function forgetPassword(ForgetPasswordRequest $request)
+    {
+       $this->authService->forgetPassword($request->validated());
+    }
+
+    public function resetPassword(string $pin , Request $request)
     {
         // Logic for setting a new password
     }
