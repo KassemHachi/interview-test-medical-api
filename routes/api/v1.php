@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
-    Route::post('verifying', [AuthController::class, 'verifying']);
+    Route::post('send-verification-email', [AuthController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
+    Route::post('verify-pin-email/{pin}', [AuthController::class, 'verifyPinEmail'])->name("verify-pin-email");
     Route::post('forget-password', [AuthController::class, 'forgetPassword']);
-    Route::post('reset-password', [AuthController::class, 'resetPassword']);
+    Route::post('reset-password/{pin}', [AuthController::class, 'resetPassword']);
 });
