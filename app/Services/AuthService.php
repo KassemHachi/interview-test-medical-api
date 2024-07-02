@@ -2,11 +2,20 @@
 
 namespace App\Services;
 
+use App\Mail\VerifyEmail;
 use App\Models\User;
+use App\Models\VerificationPin;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class AuthService
 {
+
+    public function __construct(   protected Redis $cache, protected Mail $mailer)
+    {
+    }
 
     /**
      * login user function
@@ -46,5 +55,31 @@ class AuthService
         return null;
        }
     }
+
+    public function sendVerificationEmail(User $user){
+        $pin = Str::random(15);
+        $this->mailer::to($user)->send(new VerifyEmail(pin: $pin));
+        VerificationPin::create([
+            'name' => $user->name,
+            'pin' => $pin,
+            'expired_at' => now()->addHour(5)
+        ]);
+        return $pin;
+
+    }
+
+    public function verifyPinEmail(string $pin,User $user){
+        $pin =  VerificationPin::where('pin', $pin)->where('expired_at', '>', now())->first();
+        if (!$pin){
+            return false;
+        }
+        $pin->delete();
+        $user->update(['email_verified_at' => now()]);
+        return true;
+    }
+
+    public function forgetPassword(array $data){}
+
+    public function resetPassword(){}
 
 }
