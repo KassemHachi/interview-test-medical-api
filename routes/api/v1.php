@@ -10,5 +10,5 @@ Route::prefix('auth')->group(function () {
     Route::post('send-verification-email', [AuthController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
     Route::post('verify-pin-email/{pin}', [AuthController::class, 'verifyPinEmail'])->name("verify-pin-email");
     Route::post('forget-password', [AuthController::class, 'forgetPassword']);
-    Route::post('reset-password/{pin}', [AuthController::class, 'resetPassword']);
+    Route::post('reset-password/{pin}', [AuthController::class, 'resetPassword'])->name("reset-password");
 });
