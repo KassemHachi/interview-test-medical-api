@@ -28,10 +28,23 @@ class AuthService
         if (! $isPasswordValid || ! $user) {
             return false;
         }
-        $token = $user->createToken($user->name ?? '', ['*'], now()->addDay())->plainTextToken;
+        $token = $user->createToken($user->name, ['*'], now()->addDay())->plainTextToken;
 
         return [$token, $user];
 
+    }
+
+    public function register(array $data):array
+    {
+       try {
+        $user = User::create($data);
+
+        $token = $user->createToken($user->name, ['*'], now()->addDay())->plainTextToken;
+
+        return [$token, $user];
+       } catch (\Throwable $th) {
+        return null;
+       }
     }
 
 }
