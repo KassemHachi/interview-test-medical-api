@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
-use App\Http\Requests\RegisterRequest;
 use App\Http\Resources\UserResource;
-use App\Models\User;
 use App\Services\AuthService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -30,18 +28,12 @@ class AuthController extends Controller
 
     }
 
-    public function register(RegisterRequest $request)
+    public function register(Request $request)
     {
-        $registeredUser = $this->authService->register($request->validated());
-        if (! $registeredUser) {
-            return $this->error('Invalid login, please try again');
-        }
-        [$token,$user] = $registeredUser;
-
-        return new JsonResource(['user' => new UserResource($user), 'token' => $token]);
+        // Logic for register user
     }
 
-    public function verifying(Request $request)
+    public function verifyEmail(Request $request)
     {
         // Logic for verifying user
     }
