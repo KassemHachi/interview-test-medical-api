@@ -78,8 +78,33 @@ class AuthService
         return true;
     }
 
-    public function forgetPassword(array $data){}
+    public function forgetPassword(array $data){
+        try {
 
-    public function resetPassword(){}
+        $email = $data["email"];
+        $user = User::where("email",$email)->first();
+        $pin = Str::random(15);
+        $this->mailer::to($user)->send(new VerifyEmail(pin: $pin));
+        VerificationPin::create([
+            'name' => $user->name,
+            'pin' => $pin,
+            'expired_at' => now()->addHour(5)
+        ]);
+        return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    public function resetPassword(string $pin ,array $data){
+
+        $user = User::where('email', $data['email'])->first();
+        $user->update([
+            'password' => Hash::make($data['password'])
+        ]);
+        $pin =  VerificationPin::where('pin', $pin)->where('expired_at', '>', now())->first();
+        $pin->delete();
+        return $user;
+    }
 
 }
