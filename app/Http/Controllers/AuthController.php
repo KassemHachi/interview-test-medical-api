@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ForgetPasswordRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\SendVerificationEmailRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AuthService;
@@ -64,11 +65,19 @@ class AuthController extends Controller
 
     public function forgetPassword(ForgetPasswordRequest $request)
     {
-       $this->authService->forgetPassword($request->validated());
+       $isSent = $this->authService->forgetPassword($request->validated());
+       if (!$isSent) {
+           return $this->error('Invalid email, please try again',404);
+       }
+       return $this->success("Email sent successfully");
     }
 
-    public function resetPassword(string $pin , Request $request)
+    public function resetPassword(string $pin , ResetPasswordRequest $request)
     {
-        // Logic for setting a new password
+       $user= $this->authService->resetPassword($pin,$request->validated());
+       if (!$user) {
+           return $this->error('Invalid pin, please try again',404);
+       }
+       return UserResource::make($user);
     }
 }
