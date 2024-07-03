@@ -6,6 +6,7 @@ use App\Enums\UserTypeEnum;
 use App\Http\Requests\CreateAppointmentRequest;
 use App\Http\Requests\GetAllAppointments;
 use App\Http\Requests\GetOneAppointment;
+use App\Http\Requests\UpdateAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Models\User;
 use App\Services\AppointmentService;
@@ -41,6 +42,12 @@ class AppointmentController extends Controller
     public function get(int $id,GetOneAppointment $request)
     {
         $appointment = $this->appointmentService->get($id);
+        return new AppointmentResource($appointment);
+    }
+
+    public function update(int $id, UpdateAppointmentRequest $request)
+    {
+        $appointment = $this->appointmentService->update($id,$request->validated());
         return new AppointmentResource($appointment);
     }
 }
