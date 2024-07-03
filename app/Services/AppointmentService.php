@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\UserTypeEnum;
 use App\Models\Appointment;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 
 class AppointmentService
 {
@@ -20,6 +21,28 @@ class AppointmentService
     {
         $appointment = new Appointment($data);
         $doctor->doctorAppointments()->save($appointment);
+        return $appointment;
+    }
+
+    /**
+     * get all appointments related to user
+     *
+     * @param User $user
+     * @return Collection
+     */
+    public function all(User $user):Collection
+    {
+        if ($user->type == UserTypeEnum::DOCTOR->value) {
+            return $user->doctorAppointments;
+        }elseif ($user->type == UserTypeEnum::PATIENT->value) {
+            return $user->patientAppointments;
+        }
+    }
+
+
+    public function get(int $id):Appointment
+    {
+        $appointment= Appointment::find($id);
         return $appointment;
     }
 
