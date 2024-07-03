@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserTypeEnum;
 use App\Models\Appointment;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
@@ -15,9 +16,8 @@ class GetOneAppointment extends FormRequest
      */
     public function authorize(): bool
     {
-        $appointment = Appointment::find($this->id);
         $user = $this->user();
-        return $appointment->doctor->id == $user->id || $appointment->patient->id == $user->id;
+        return $user->type == UserTypeEnum::DOCTOR->value || $user->type == UserTypeEnum::PATIENT->value;
     }
 
     /**

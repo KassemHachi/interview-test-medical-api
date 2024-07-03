@@ -6,7 +6,7 @@ use App\Enums\UserTypeEnum;
 use App\Models\Appointment;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAppointmentRequest extends FormRequest
+class DeleteAppointmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,7 +14,8 @@ class UpdateAppointmentRequest extends FormRequest
     public function authorize(): bool
     {
         $user = $this->user();
-        return $user->type == UserTypeEnum::DOCTOR->value;
+        $appointment = Appointment::find($this->id);
+        return $user->type == UserTypeEnum::DOCTOR->value && $appointment->doctor->id == $user->id ;
     }
 
     /**
@@ -25,10 +26,7 @@ class UpdateAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'patient_id' => ['exists:users,id'],
-           'date' => ['date'],
-           'time' => ['string'],
-           'reason' => ['string'],
+            //
         ];
     }
 }
