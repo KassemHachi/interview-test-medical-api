@@ -15,9 +15,9 @@ class GetOneAppointment extends FormRequest
      */
     public function authorize(): bool
     {
-        $appointment = Appointment::find($this->route('id'));
+        $appointment = Appointment::find($this->id);
         $user = $this->user();
-        return ($appointment->doctor() == $user || $appointment->patient() == $user);
+        return $appointment->doctor->id == $user->id || $appointment->patient->id == $user->id;
     }
 
     /**
