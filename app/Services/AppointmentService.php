@@ -39,7 +39,12 @@ class AppointmentService
         }
     }
 
-
+    /**
+     * get one appointment
+     *
+     * @param integer $id
+     * @return Appointment
+     */
     public function get(int $id):Appointment
     {
         $appointment= Appointment::find($id);
