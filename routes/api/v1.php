@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PateintController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,9 @@ Route::prefix('auth')->group(function () {
 Route::prefix('doctors')->group(function () {
     Route::get('', [DoctorController::class, 'index']);
     Route::get('{id}', [DoctorController::class, 'get']);
+})->middleware('auth:sanctum');
+
+Route::prefix('patients')->group(function () {
+    Route::get('', [PateintController::class, 'index']);
+    Route::get('{id}', [PateintController::class, 'get']);
 })->middleware('auth:sanctum');
