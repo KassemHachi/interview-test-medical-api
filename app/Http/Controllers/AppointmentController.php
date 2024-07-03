@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\UserTypeEnum;
 use App\Http\Requests\CreateAppointmentRequest;
+use App\Http\Requests\GetAllAppointments;
+use App\Http\Requests\GetOneAppointment;
 use App\Http\Resources\AppointmentResource;
 use App\Models\User;
 use App\Services\AppointmentService;
@@ -26,6 +28,19 @@ class AppointmentController extends Controller
         $appointment =  $this->appointmentService->store($data,$doctor);
 
 
+        return new AppointmentResource($appointment);
+    }
+
+    public function index(GetAllAppointments $request)
+    {
+        $user = $request->user();
+        $appointment = $this->appointmentService->all($user);
+        return AppointmentResource::collection($appointment);
+    }
+
+    public function get(int $id,GetOneAppointment $request)
+    {
+        $appointment = $this->appointmentService->get($id);
         return new AppointmentResource($appointment);
     }
 }
