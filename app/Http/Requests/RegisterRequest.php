@@ -28,7 +28,7 @@ class RegisterRequest extends FormRequest
             "email" => ['required','string','email','max:255','unique:users'],
             "password" => ['required','string','confirmed','min:8'],
             "type"=> ['required','string','in:admin,doctor,patient'],
-            "phone" => ['required','string','min:10']
+            "phone" => ['required','string','min:10','unique:users']
         ];
     }
 
