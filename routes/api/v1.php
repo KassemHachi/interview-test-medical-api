@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\PateintController;
+use App\Http\Controllers\PatientController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +20,6 @@ Route::prefix('doctors')->group(function () {
 })->middleware('auth:sanctum');
 
 Route::prefix('patients')->group(function () {
-    Route::get('', [PateintController::class, 'index']);
-    Route::get('{id}', [PateintController::class, 'get']);
+    Route::get('', [PatientController::class, 'index']);
+    Route::get('{id}', [PatientController::class, 'get']);
 })->middleware('auth:sanctum');

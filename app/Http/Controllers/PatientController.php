@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Services\AccountService;
 use Illuminate\Http\Request;
 
-class PateintController extends Controller
+class PatientController extends Controller
 {
     public function __construct(protected AccountService $accountService){}
 
