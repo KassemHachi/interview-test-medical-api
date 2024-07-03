@@ -45,9 +45,12 @@ class AppointmentService
      * @param integer $id
      * @return Appointment
      */
-    public function get(int $id):Appointment
+    public function get(int $id,User $user):Appointment|null
     {
         $appointment= Appointment::find($id);
+        if (!$appointment ||( $appointment->doctor_id != $user->id && $appointment->patient_id != $user->id)) {
+            return null;
+        }
         return $appointment;
     }
 
@@ -58,11 +61,28 @@ class AppointmentService
      * @param array $data
      * @return Appointment
      */
-    public function update(int $id, array $data):Appointment
+    public function update(int $id, array $data, User $user):Appointment|null
     {
-        $appointment = $this->get($id);
+        $appointment = $appointment= Appointment::find($id);
+        if (!$appointment || $appointment->doctor_id != $user->id) {
+            return null;
+        }
         $appointment->update($data);
         return $appointment;
     }
 
+    /**
+     * delete an appointment
+     *
+     * @param Appointment $appointment
+     * @return void
+     */
+    public function delete(int $id,User $user):bool
+    {
+        $appointment =  $appointment= Appointment::find($id);;
+        if (!$appointment || $appointment->doctor_id != $user->id) {
+            return false;
+        }
+        return  $appointment->delete();
+    }
 }
