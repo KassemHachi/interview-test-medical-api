@@ -15,4 +15,5 @@ Route::prefix('auth')->group(function () {
 });
 Route::prefix('doctors')->group(function () {
     Route::get('', [DoctorController::class, 'index']);
-});
+    Route::get('{id}', [DoctorController::class, 'get']);
+})->middleware('auth:sanctum');
