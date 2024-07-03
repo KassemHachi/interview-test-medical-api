@@ -17,4 +17,14 @@ class AccountService
     {
         return User::where('type', UserTypeEnum::DOCTOR->value)->get();
     }
+
+    /**
+     * Get all patients from database
+     *
+     * @return Collection
+     */
+    public function getPatients():Collection
+    {
+        return User::where('type', UserTypeEnum::PATIENT->value)->get();
+    }
 }
