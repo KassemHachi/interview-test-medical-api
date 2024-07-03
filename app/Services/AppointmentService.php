@@ -51,4 +51,18 @@ class AppointmentService
         return $appointment;
     }
 
+    /**
+     * update an appointment
+     *
+     * @param integer $id
+     * @param array $data
+     * @return Appointment
+     */
+    public function update(int $id, array $data):Appointment
+    {
+        $appointment = $this->get($id);
+        $appointment->update($data);
+        return $appointment;
+    }
+
 }
