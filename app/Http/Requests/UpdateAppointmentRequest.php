@@ -14,7 +14,7 @@ class UpdateAppointmentRequest extends FormRequest
     public function authorize(): bool
     {
         $user = $this->user();
-        $appointment = Appointment::find($this->validate('id'));
+        $appointment = Appointment::find($this->id);
         return $user->type == UserTypeEnum::DOCTOR->value && $appointment->doctor->id == $user->id ;
     }
 
