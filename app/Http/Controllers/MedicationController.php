@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\GetAllMedicationsRequest;
+use App\Http\Requests\GetMedicationRequest;
 use App\Http\Resources\MedicationResource;
 use App\Services\MedicationService;
 
@@ -13,7 +14,7 @@ class MedicationController extends Controller
     public function index(GetAllMedicationsRequest $request)
     {
         $medications = $this->medicationService->getAllMedications();
-        return new MedicationResource($medications);
+        return MedicationResource::collection($medications);
     }
 
     public function store()
@@ -21,9 +22,10 @@ class MedicationController extends Controller
         //
     }
 
-    public function show()
+    public function show(int $id, GetMedicationRequest $request)
     {
-        //
+        $medication = $this->medicationService->getMedication($id);
+        return new MedicationResource($medication);
     }
 
     public function update()
