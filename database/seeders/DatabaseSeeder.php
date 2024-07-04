@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserTypeEnum;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -17,7 +18,15 @@ class DatabaseSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Test User',
-            'email' => 'test@example.com',
+            'email' => 'patient@example.com',
+            'phone' => '1234567890',
+            'type' => UserTypeEnum::PATIENT->value
+        ]);
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'doctor@example.com',
+            'phone' => '1234567800',
+            'type' => UserTypeEnum::DOCTOR->value
         ]);
     }
 }
