@@ -3,6 +3,7 @@
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PrescriptionController;
@@ -49,4 +50,12 @@ Route::middleware('auth:sanctum')->prefix('medications')->group(function () {
     Route::get('{id}', [MedicationController::class, 'show']);
     Route::patch('{id}', [MedicationController::class, 'update']);
     Route::delete('{id}', [MedicationController::class, 'destroy']);
+});
+
+Route::middleware('auth:sanctum')->prefix('medical-histories')->group(function () {
+    Route::post('', [MedicalHistoryController::class, 'store']);
+    Route::get('', [MedicalHistoryController::class, 'index']);
+    Route::get('{id}', [MedicalHistoryController::class, 'show']);
+    Route::patch('{id}', [MedicalHistoryController::class, 'update']);
+    Route::delete('{id}', [MedicalHistoryController::class, 'destroy']);
 });
