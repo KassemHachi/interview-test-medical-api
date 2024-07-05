@@ -43,7 +43,7 @@ class MedicationService
      */
     public function getMedication(int $id):Medication|null
     {
-        $medication =  Medication::findorFail($id);
+        $medication =  Medication::find($id);
         if (!$medication){
             return null;
         }
