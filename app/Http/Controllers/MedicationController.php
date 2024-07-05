@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateMedicationRequest;
 use App\Http\Requests\GetAllMedicationsRequest;
 use App\Http\Requests\GetMedicationRequest;
 use App\Http\Resources\MedicationResource;
@@ -17,14 +18,18 @@ class MedicationController extends Controller
         return MedicationResource::collection($medications);
     }
 
-    public function store()
+    public function store(CreateMedicationRequest $request)
     {
-        //
+        $medication = $this->medicationService->createMedication($request->validated());
+        return new MedicationResource($medication);
     }
 
     public function show(int $id, GetMedicationRequest $request)
     {
         $medication = $this->medicationService->getMedication($id);
+        if (!$medication) {
+            return $this->error("Medication not found", 404);
+        }
         return new MedicationResource($medication);
     }
 
