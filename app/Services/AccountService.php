@@ -38,7 +38,9 @@ class AccountService
      */
     public function update(int $id, array $data):User
     {
-        return User::find($id)->update($data);
+        $user = User::find($id);
+        $user->update($data);
+        return $user;
     }
 
        /**
