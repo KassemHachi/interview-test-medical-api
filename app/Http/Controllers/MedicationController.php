@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateMedicationRequest;
+use App\Http\Requests\DeleteMedicationRequest;
 use App\Http\Requests\GetAllMedicationsRequest;
 use App\Http\Requests\GetMedicationRequest;
+use App\Http\Requests\UpdateMedicationRequest;
 use App\Http\Resources\MedicationResource;
 use App\Services\MedicationService;
 
@@ -33,13 +35,15 @@ class MedicationController extends Controller
         return new MedicationResource($medication);
     }
 
-    public function update()
+    public function update(int $id, UpdateMedicationRequest $request)
     {
-        //
+        $medication = $this->medicationService->updateMedication($id,$request->validated());
+        return new MedicationResource($medication);
     }
 
-    public function destroy()
+    public function destroy(int $id, DeleteMedicationRequest $request)
     {
-        //
+        $medication = $this->medicationService->deleteMedication($id);
+        return new MedicationResource($medication);
     }
 }
