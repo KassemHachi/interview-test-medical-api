@@ -25,6 +25,12 @@ class ProfileController extends Controller
         return new UserResource($user);
     }
 
+    public function updatePassword(UpdateProfileRequest $request):UserResource
+    {
+        $user = $this->accountService->updatePassword($request->user()->id, $request->validated());
+        return new UserResource($user);
+    }
+
     public function delete(DeleteProfileRequest $request):JsonResponse
     {
         $isDeleted = $this->accountService->delete($request->user()->id);
