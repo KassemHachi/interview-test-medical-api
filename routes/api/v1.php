@@ -24,6 +24,7 @@ Route::prefix('auth')->group(function () {
 Route::middleware('auth:sanctum')->prefix('profile')->group(function () {
     Route::get('', [ProfileController::class, 'get']);
     Route::patch('', [ProfileController::class, 'update']);
+    Route::patch('chage-password', [ProfileController::class, 'updatePassword']);
     Route::delete('', [ProfileController::class, 'delete']);
 });
 
