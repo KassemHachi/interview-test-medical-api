@@ -13,7 +13,7 @@ class PatientController extends Controller
     public function __construct(protected AccountService $accountService){}
 
     public function index(){
-        $pateints = $this->accountService->getDoctors();
+        $pateints = $this->accountService->getPatients();
         return UserResource::collection($pateints);
     }
 
