@@ -27,4 +27,27 @@ class AccountService
     {
         return User::where('type', UserTypeEnum::PATIENT->value)->get();
     }
+
+    /**
+     * Update user information
+     *
+     * @param integer $id
+     * @param array $data
+     * @return User
+     */
+    public function update(int $id, array $data):User
+    {
+        return User::find($id)->update($data);
+    }
+
+    /**
+     * Delete user
+     *
+     * @param integer $id
+     * @return boolean
+     */
+    public function delete(int $id):bool
+    {
+        return User::find($id)->delete();
+    }
 }
