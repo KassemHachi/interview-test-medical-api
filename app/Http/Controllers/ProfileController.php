@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DeleteProfileRequest;
 use App\Http\Requests\GetProfileRequest;
+use App\Http\Requests\UpdatePasswordProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
 use App\Http\Resources\UserResource;
 use App\Services\AccountService;
@@ -25,7 +26,7 @@ class ProfileController extends Controller
         return new UserResource($user);
     }
 
-    public function updatePassword(UpdateProfileRequest $request):JsonResponse
+    public function updatePassword(UpdatePasswordProfileRequest $request):JsonResponse
     {
         $isPasswordUpdated = $this->accountService->updatePassword($request->user()->id, $request->validated());
         if (!$isPasswordUpdated) {

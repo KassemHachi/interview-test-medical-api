@@ -60,7 +60,7 @@ class AccountService
         }
 
         return $user->update([
-            'password' => Hash::crypt($data['password']),
+            'password' => Hash::make($data['password']),
         ]);
     }
 
