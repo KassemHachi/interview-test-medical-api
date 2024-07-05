@@ -31,7 +31,7 @@ class MedicalHistoryService
      * @param integer $id
      * @return MedicalHistory|null
      */
-    public function getMedicalHistory(int $id,User $user):MedicalHistory|null
+    public function getMedicalHistory(int $id,User $user):?MedicalHistory
     {
         if ($user->type == UserTypeEnum::DOCTOR->value) {
             return $user->doctorMedicalHistories->find($id);
@@ -46,9 +46,11 @@ class MedicalHistoryService
      * @param array $data
      * @return MedicalHistory
      */
-    public function createMedicalHistory(array $data):MedicalHistory
+    public function createMedicalHistory(array $data, User $doctor):MedicalHistory
     {
-        return MedicalHistory::create($data);
+        $medicalHistory = new MedicalHistory($data);
+        $doctor->doctorMedicalHistories()->save($medicalHistory);
+        return $medicalHistory;
     }
 
     /**
@@ -58,7 +60,7 @@ class MedicalHistoryService
      * @param array $data
      * @return MedicalHistory|null
      */
-    public function updateMedicalHistory(int $id,User $doctor, array $data): ?MedicalHistory
+    public function updateMedicalHistory(int $id,array $data,User $doctor): ?MedicalHistory
     {
         $medicalHistory = $doctor->doctorMedicalHistories->find($id);
         if (!$medicalHistory) {
