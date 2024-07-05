@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\UserTypeEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Hash;
 
 class AccountService
 {
@@ -38,6 +39,27 @@ class AccountService
     public function update(int $id, array $data):User
     {
         return User::find($id)->update($data);
+    }
+
+       /**
+     * Update user password
+     *
+     * @param integer $id
+     * @param array $data
+     * @return User
+     */
+    public function updatePassword(int $id, array $data):bool
+    {
+
+        $user = User::find($id);
+        $oldPassword = $data['old_password'];
+        if ( !Hash::check($oldPassword, $user->password) ) {
+            return false;
+        }
+
+        return $user->update([
+            'password' => Hash::crypt($data['password']),
+        ]);
     }
 
     /**
