@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('medical_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('patient_id')->constrained();
-            $table->foreignId('doctor_id')->constrained();
+            $table->foreignId('patient_id')->constrained('users');
+            $table->foreignId('doctor_id')->constrained('users');
             $table->text('diagnosis');
             $table->text('treatment');
             $table->text('notes')->nullable();
