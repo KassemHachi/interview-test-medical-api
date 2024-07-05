@@ -7,8 +7,10 @@ use App\Http\Controllers\MedicalHistoryController;
 use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -18,6 +20,13 @@ Route::prefix('auth')->group(function () {
     Route::post('forget-password', [AuthController::class, 'forgetPassword']);
     Route::post('reset-password/{pin}', [AuthController::class, 'resetPassword'])->name("reset-password");
 });
+
+Route::middleware('auth:sanctum')->prefix('profile')->group(function () {
+    Route::get('', [ProfileController::class, 'get']);
+    Route::patch('', [ProfileController::class, 'update']);
+    Route::delete('', [ProfileController::class, 'delete']);
+});
+
 Route::middleware('auth:sanctum')->prefix('doctors')->group(function () {
     Route::get('', [DoctorController::class, 'index']);
     Route::get('{id}', [DoctorController::class, 'get']);
