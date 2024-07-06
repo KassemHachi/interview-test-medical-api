@@ -4,6 +4,7 @@ This is a RESTful API for managing a doctor's office, developed using Laravel. T
 
 ## Table of Contents
 
+-   [Requirements](#requirements)
 -   [Installation](#installation)
 -   [Configuration](#configuration)
 -   [Usage](#usage)
@@ -15,6 +16,13 @@ This is a RESTful API for managing a doctor's office, developed using Laravel. T
     -   [Medical Histories](#medical-histories)
     -   [Medications](#medications)
     -   [Profile](#profile)
+
+## Requirements
+
+This project requires the following to run:
+
+-    PHP 8.2+
+-    Laravel v11.0+
 
 ## Installation
 
@@ -154,3 +162,167 @@ Ensure you configure the following environment variables in your `.env` file:
 -   Get One Appointment
     -    Endpoint: `GET /appointments/{id}`
     -    Authentication: Bearer token
+
+-   Get All Appointments
+    -    Endpoint: `GET /appointments/`
+    -    Authentication: Bearer token
+ 
+-  Delete Appointment
+    -    Endpoint: `DELETE /appointments/{id}`
+    -    Authentication: Bearer token
+
+### Prescriptions
+-   Create Prescription
+    -    Endpoint: `POST /prescriptions`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "prescription_medications": [
+                        {
+                          "medication_id": 1,
+                          "dosage": "3",
+                          "frequency": "5",
+                          "start_date": "2024-07-04",
+                          "end_date": "2024-07-04"
+                        }
+                      ]
+                    }
+    -    Authentication: Bearer token
+ 
+-   Update Prescription
+    -    Endpoint: `PATCH /prescriptions/{id}`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "prescription_medications": [
+                        {
+                          "medication_id": 1,
+                          "dosage": "3",
+                          "frequency": "5",
+                          "start_date": "2024-07-04",
+                          "end_date": "2024-07-04"
+                        }
+                      ]
+                    }
+    -    Authentication: Bearer token
+-   Get One Prescription
+    -    Endpoint: `GET /prescriptions/{id}`
+    -    Authentication: Bearer token
+
+-   Get All Prescriptions
+    -    Endpoint: `GET /prescriptions/`
+    -    Authentication: Bearer token
+    
+-  Delete Prescription
+    -    Endpoint: `DELETE /prescriptions/{id}`
+    -    Authentication: Bearer token
+
+### Medical Histories
+-   Create Medical History
+    -    Endpoint: `POST /medical-histories`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "diagnosis": "Diagnosis example",
+                      "treatment": "Treatment example",
+                      "notes": "Notes example"
+                    }
+            ```
+    -    Authentication: Bearer token
+ 
+-   Update Medical History
+    -    Endpoint: `PATCH /medical-histories/{id}`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "diagnosis": "Diagnosis example",
+                      "treatment": "Treatment example",
+                      "notes": "Notes example"
+                    }
+            ```
+    -    Authentication: Bearer token
+      
+-   Get One Medical History
+    -    Endpoint: `GET /medical-histories/{id}`
+    -    Authentication: Bearer token
+
+-   Get All Medical Histories
+    -    Endpoint: `GET /medical-histories/`
+    -    Authentication: Bearer token
+    
+-  Delete Medical History
+    -    Endpoint: `DELETE /medical-histories/{id}`
+    -    Authentication: Bearer token
+
+### Medications
+-   Create Medication
+    -    Endpoint: `POST /medications`
+    -    Request Body:
+            ```json
+                    {
+                      "name": "Medication name",
+                      "description": "Medication description"
+                    }
+            ```
+    -    Authentication: Bearer token
+ 
+-   Update Medication
+    -    Endpoint: `PATCH /medications/{id}`
+    -    Request Body:
+            ```json
+                    {
+                      "name": "Medication name",
+                      "description": "Medication description"
+                    }
+            ```
+    -    Authentication: Bearer token
+      
+-   Get One Medication
+    -    Endpoint: `GET /medications/{id}`
+    -    Authentication: Bearer token
+
+-   Get All Medication
+    -    Endpoint: `GET /medications/`
+    -    Authentication: Bearer token
+    
+-  Delete Medication
+    -    Endpoint: `DELETE /medications/{id}`
+    -    Authentication: Bearer token
+
+### Profile
+
+- Get Profile
+  - Endpoint: `GET /profile`
+  - Authentication: Bearer token
+
+- Update Profile
+  - Endpoint: `PATCH /profile`
+  - Request Body:
+    ```json
+    {
+      "name": "Updated name",
+      "email": "updatedemail@example.com",
+      "phone": "Updated phone number"
+    }
+    ```
+  - Authentication: Bearer token
+
+- Delete Profile
+  - Endpoint: `DELETE /profile`
+  - Authentication: Bearer token
+
+- Change Password
+  - Endpoint: `PATCH /profile/change-password`
+  - Request Body:
+    ```json
+    {
+      "current_password": "currentpassword",
+      "new_password": "newpassword",
+      "new_password_confirmation": "newpassword"
+    }
+    ```
+  - Authentication: Bearer token
