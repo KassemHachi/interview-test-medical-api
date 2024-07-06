@@ -12,9 +12,8 @@ class VerificationPin extends Model
     protected $fillable = [
         'name',
         'expired_at',
-        "pin"
+        'pin',
     ];
 
-
-    protected $table = "verification_pins";
+    protected $table = 'verification_pins';
 }

@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Enums\UserTypeEnum;
-use App\Models\Appointment;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAppointmentRequest extends FormRequest
@@ -14,6 +13,7 @@ class UpdateAppointmentRequest extends FormRequest
     public function authorize(): bool
     {
         $user = $this->user();
+
         return $user->type == UserTypeEnum::DOCTOR->value;
     }
 
@@ -25,10 +25,10 @@ class UpdateAppointmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'patient_id' => ['exists:users,id'],
-           'date' => ['date'],
-           'time' => ['string'],
-           'reason' => ['string'],
+            'patient_id' => ['exists:users,id'],
+            'date' => ['date'],
+            'time' => ['string'],
+            'reason' => ['string'],
         ];
     }
 }

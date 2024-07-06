@@ -15,7 +15,8 @@ class DeleteAppointmentRequest extends FormRequest
     {
         $user = $this->user();
         $appointment = Appointment::find($this->id);
-        return $user->type == UserTypeEnum::DOCTOR->value && $appointment->doctor->id == $user->id ;
+
+        return $user->type == UserTypeEnum::DOCTOR->value && $appointment->doctor->id == $user->id;
     }
 
     /**

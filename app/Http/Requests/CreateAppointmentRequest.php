@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\UserTypeEnum;
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class CreateAppointmentRequest extends FormRequest
 {
@@ -14,7 +11,7 @@ class CreateAppointmentRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return  auth()->check();
+        return auth()->check();
     }
 
     /**

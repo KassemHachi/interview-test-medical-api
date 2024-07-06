@@ -11,46 +11,35 @@ use Illuminate\Support\Facades\DB;
 
 class PrescriptionService
 {
-
     /**
      * get all prescriptions related users
-     *
-     * @param User $user
-     * @return Collection
      */
-    public function getPresriptions(User $user):Collection
+    public function getPresriptions(User $user): Collection
     {
         if ($user->type == UserTypeEnum::DOCTOR->value) {
             return $user->doctorPrescriptions;
-        }elseif ($user->type == UserTypeEnum::PATIENT->value) {
+        } elseif ($user->type == UserTypeEnum::PATIENT->value) {
             return $user->patientPrescriptions;
         }
     }
 
     /**
      * get one prescription
-     *
-     * @param integer $id
-     * @param User $user
-     * @return Prescription|null
      */
-    public function getPrescription(int $id ,User $user):Prescription|null
+    public function getPrescription(int $id, User $user): ?Prescription
     {
-        $prescription= Prescription::find($id);
-        if (!$prescription ||( $prescription->doctor_id != $user->id && $prescription->patient_id != $user->id)) {
+        $prescription = Prescription::find($id);
+        if (! $prescription || ($prescription->doctor_id != $user->id && $prescription->patient_id != $user->id)) {
             return null;
         }
+
         return $prescription;
     }
 
     /**
      * Create a new Prescription
-     *
-     * @param array $data
-     * @param User $doctor
-     * @return Prescription
      */
-    public function createPrescription(array $data,User $doctor):Prescription
+    public function createPrescription(array $data, User $doctor): Prescription
     {
         return DB::transaction(function () use ($data, $doctor) {
             // Create the prescription
@@ -72,13 +61,8 @@ class PrescriptionService
 
     /**
      * update a prescription with its medications
-     *
-     * @param integer $id
-     * @param array $data
-     * @param User $user
-     * @return Prescription|null
      */
-    public function updatePrescription(int $id, array $data,User $user):Prescription|null
+    public function updatePrescription(int $id, array $data, User $user): ?Prescription
     {
 
         return DB::transaction(function () use ($data, $id) {
@@ -109,16 +93,14 @@ class PrescriptionService
 
     /**
      * Delete a prescription
-     *
-     * @param integer $id
-     * @return boolean
      */
-    public function deletePrescription(int $id):bool
+    public function deletePrescription(int $id): bool
     {
         $prescription = Prescription::findOrFail($id);
-        if (!$prescription) {
+        if (! $prescription) {
             return false;
         }
+
         return $prescription->delete();
     }
 }

@@ -13,7 +13,8 @@ class GetMedicalHistoryRequest extends FormRequest
     public function authorize(): bool
     {
         $user = $this->user();
-        return  $user->type == UserTypeEnum::PATIENT->value || $user->type == UserTypeEnum::DOCTOR->value;
+
+        return $user->type == UserTypeEnum::PATIENT->value || $user->type == UserTypeEnum::DOCTOR->value;
     }
 
     /**

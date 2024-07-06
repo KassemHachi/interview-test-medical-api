@@ -46,38 +46,42 @@ class AuthController extends Controller
     public function sendVerificationEmail(SendVerificationEmailRequest $request)
     {
 
-      try {
-        $this->authService->sendVerificationEmail($request->user());
-        return $this->success("Verification email sent successfully");
-      } catch (\Throwable $th) {
-        return $this->error("There is error sending verification email", 500);
-      }
+        try {
+            $this->authService->sendVerificationEmail($request->user());
+
+            return $this->success('Verification email sent successfully');
+        } catch (\Throwable $th) {
+            return $this->error('There is error sending verification email', 500);
+        }
     }
 
     public function verifyPinEmail(string $pin, Request $request)
     {
         $verified = $this->authService->verifyPinEmail($pin, $request->user());
-        if (!$verified){
-            return $this->error('Invalid pin, please try again',404);
+        if (! $verified) {
+            return $this->error('Invalid pin, please try again', 404);
         }
-        return $this->success("Email verified successfully");
+
+        return $this->success('Email verified successfully');
     }
 
     public function forgetPassword(ForgetPasswordRequest $request)
     {
-       $isSent = $this->authService->forgetPassword($request->validated());
-       if (!$isSent) {
-           return $this->error('Invalid email, please try again',404);
-       }
-       return $this->success("Email sent successfully");
+        $isSent = $this->authService->forgetPassword($request->validated());
+        if (! $isSent) {
+            return $this->error('Invalid email, please try again', 404);
+        }
+
+        return $this->success('Email sent successfully');
     }
 
-    public function resetPassword(string $pin , ResetPasswordRequest $request)
+    public function resetPassword(string $pin, ResetPasswordRequest $request)
     {
-       $user= $this->authService->resetPassword($pin,$request->validated());
-       if (!$user) {
-           return $this->error('Invalid pin, please try again',404);
-       }
-       return UserResource::make($user);
+        $user = $this->authService->resetPassword($pin, $request->validated());
+        if (! $user) {
+            return $this->error('Invalid pin, please try again', 404);
+        }
+
+        return UserResource::make($user);
     }
 }

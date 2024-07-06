@@ -13,6 +13,7 @@ class GetPrescriptionRequest extends FormRequest
     public function authorize(): bool
     {
         $user = $this->user();
+
         return $user->type == UserTypeEnum::DOCTOR->value || $user->type == UserTypeEnum::PATIENT->value;
     }
 

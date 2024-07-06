@@ -11,7 +11,8 @@ class Medication extends Model
 
     protected $guarded = [];
 
-    public function prescription_midications(){
+    public function prescription_midications()
+    {
         return $this->hasMany(PrescriptionMedication::class);
     }
 }

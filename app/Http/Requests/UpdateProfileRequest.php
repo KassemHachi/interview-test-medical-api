@@ -22,9 +22,9 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-           'name' => ['string'],
-           'email' => ['string', 'email', 'max:255', 'unique:users'],
-           'phone' => ['string', 'max:255','min:10', 'unique:users'],
+            'name' => ['string'],
+            'email' => ['string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['string', 'max:255', 'min:10', 'unique:users'],
         ];
     }
 }
