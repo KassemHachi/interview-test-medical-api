@@ -1,66 +1,328 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Doctor's Office Management System API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This is a RESTful API for managing a doctor's office, developed using Laravel. The API provides endpoints for managing authentication, doctors, patients, appointments, prescriptions, medical histories, and medications.
 
-## About Laravel
+## Table of Contents
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   [Requirements](#requirements)
+-   [Installation](#installation)
+-   [Configuration](#configuration)
+-   [Usage](#usage)
+    -   [Authentication](#authentication)
+    -   [Doctors](#doctors)
+    -   [Patients](#patients)
+    -   [Appointments](#appointments)
+    -   [Prescriptions](#prescriptions)
+    -   [Medical Histories](#medical-histories)
+    -   [Medications](#medications)
+    -   [Profile](#profile)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+This project requires the following to run:
 
-## Learning Laravel
+-    PHP 8.2+
+-    Laravel v11.0+
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Installation
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. Clone the repository:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    ```bash
+    git clone https://github.com/yourusername/doctor-office-management.git
+    cd doctor-office-management
+    ```
 
-## Laravel Sponsors
+2. Install the dependencies:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    ```bash
+    composer install
+    ```
 
-### Premium Partners
+3. Set up the environment variables:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-## Contributing
+4. Configure your database in the `.env` file:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+5. Set up the environment variables:
 
-## Code of Conduct
+    ```bash
+    php artisan migrate --seed
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+6. Start the development server
 
-## Security Vulnerabilities
+    ```bash
+    php artisan serve
+    ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Configuration
 
-## License
+Ensure you configure the following environment variables in your `.env` file:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+    DB_CONNECTION
+    DB_HOST
+    DB_PORT
+    DB_DATABASE
+    DB_USERNAME
+    DB_PASSWORD
+
+
+## Usage
+
+### Authentication
+
+-   Register a new user
+    -    Endpoint: `POST /auth/register`
+    -    Request Body:
+            ```json
+                 {
+                      "name": "User Name",
+                      "email": "patient@test.com",
+                      "password": "password",
+                      "password_confirmation": "password",
+                      "type": "patient",
+                      "phone": "0123456789"
+                 }
+            ``` 
+-   Login
+    -    Endpoint: `POST /auth/login`
+    -    Request Body:
+          ```json
+                  {
+                      "email": "doctor@example.com",
+                      "password": "password"
+                  }
+            ```
+          
+-   Logout
+    -    Endpoint: `POST /auth/logout`
+    -    Authentication: Bearer token
+
+-   Forgot Password
+    -    Endpoint: `POST /auth/forgot-password`
+
+-   Reset Password
+    -    Endpoint: `PATCH /auth/reset-password`
+
+-   Verify Email
+    -    Endpoint: `POST /auth/verify-email`
+
+-   Send Verification Email
+    -    Endpoint: `POST /auth/send-verification-email`
+    -    Authentication: Bearer token
+
+### Doctors
+-   Get One Doctor
+    -    Endpoint: `GET /doctors/{id}`
+    -    Authentication: Bearer token
+ 
+ -   Get All Doctors
+    -    Endpoint: `GET /doctors/`
+    -    Authentication: Bearer token
+ 
+### Patients
+-   Get One Patient
+    -    Endpoint: `GET /patients/{id}`
+    -    Authentication: Bearer token
+ 
+-   Get All Patients
+    -    Endpoint: `GET /patients/`
+    -    Authentication: Bearer token
+ 
+### Appointments
+-   Create Appointment
+    -    Endpoint: `POST /appointments`
+    -    Request Body:
+            ```json
+                 {
+                      "patient_id": 1,
+                      "date": "2024-07-03",
+                      "time": "07:25:00",
+                      "reason": "test reason"
+                 }
+    -    Authentication: Bearer token
+ 
+-   Update Appointment
+    -    Endpoint: `PATCH /appointments/{id}`
+    -    Request Body:
+            ```json
+                 {
+                      "patient_id": 1,
+                      "date": "2024-07-03",
+                      "time": "07:25:00",
+                      "reason": "test reason"
+                 }
+    -    Authentication: Bearer token
+-   Get One Appointment
+    -    Endpoint: `GET /appointments/{id}`
+    -    Authentication: Bearer token
+
+-   Get All Appointments
+    -    Endpoint: `GET /appointments/`
+    -    Authentication: Bearer token
+ 
+-  Delete Appointment
+    -    Endpoint: `DELETE /appointments/{id}`
+    -    Authentication: Bearer token
+
+### Prescriptions
+-   Create Prescription
+    -    Endpoint: `POST /prescriptions`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "prescription_medications": [
+                        {
+                          "medication_id": 1,
+                          "dosage": "3",
+                          "frequency": "5",
+                          "start_date": "2024-07-04",
+                          "end_date": "2024-07-04"
+                        }
+                      ]
+                    }
+    -    Authentication: Bearer token
+ 
+-   Update Prescription
+    -    Endpoint: `PATCH /prescriptions/{id}`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "prescription_medications": [
+                        {
+                          "medication_id": 1,
+                          "dosage": "3",
+                          "frequency": "5",
+                          "start_date": "2024-07-04",
+                          "end_date": "2024-07-04"
+                        }
+                      ]
+                    }
+    -    Authentication: Bearer token
+-   Get One Prescription
+    -    Endpoint: `GET /prescriptions/{id}`
+    -    Authentication: Bearer token
+
+-   Get All Prescriptions
+    -    Endpoint: `GET /prescriptions/`
+    -    Authentication: Bearer token
+    
+-  Delete Prescription
+    -    Endpoint: `DELETE /prescriptions/{id}`
+    -    Authentication: Bearer token
+
+### Medical Histories
+-   Create Medical History
+    -    Endpoint: `POST /medical-histories`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "diagnosis": "Diagnosis example",
+                      "treatment": "Treatment example",
+                      "notes": "Notes example"
+                    }
+            ```
+    -    Authentication: Bearer token
+ 
+-   Update Medical History
+    -    Endpoint: `PATCH /medical-histories/{id}`
+    -    Request Body:
+            ```json
+                    {
+                      "patient_id": 1,
+                      "diagnosis": "Diagnosis example",
+                      "treatment": "Treatment example",
+                      "notes": "Notes example"
+                    }
+            ```
+    -    Authentication: Bearer token
+      
+-   Get One Medical History
+    -    Endpoint: `GET /medical-histories/{id}`
+    -    Authentication: Bearer token
+
+-   Get All Medical Histories
+    -    Endpoint: `GET /medical-histories/`
+    -    Authentication: Bearer token
+    
+-  Delete Medical History
+    -    Endpoint: `DELETE /medical-histories/{id}`
+    -    Authentication: Bearer token
+
+### Medications
+-   Create Medication
+    -    Endpoint: `POST /medications`
+    -    Request Body:
+            ```json
+                    {
+                      "name": "Medication name",
+                      "description": "Medication description"
+                    }
+            ```
+    -    Authentication: Bearer token
+ 
+-   Update Medication
+    -    Endpoint: `PATCH /medications/{id}`
+    -    Request Body:
+            ```json
+                    {
+                      "name": "Medication name",
+                      "description": "Medication description"
+                    }
+            ```
+    -    Authentication: Bearer token
+      
+-   Get One Medication
+    -    Endpoint: `GET /medications/{id}`
+    -    Authentication: Bearer token
+
+-   Get All Medication
+    -    Endpoint: `GET /medications/`
+    -    Authentication: Bearer token
+    
+-  Delete Medication
+    -    Endpoint: `DELETE /medications/{id}`
+    -    Authentication: Bearer token
+
+### Profile
+
+- Get Profile
+  - Endpoint: `GET /profile`
+  - Authentication: Bearer token
+
+- Update Profile
+  - Endpoint: `PATCH /profile`
+  - Request Body:
+    ```json
+    {
+      "name": "Updated name",
+      "email": "updatedemail@example.com",
+      "phone": "Updated phone number"
+    }
+    ```
+  - Authentication: Bearer token
+
+- Delete Profile
+  - Endpoint: `DELETE /profile`
+  - Authentication: Bearer token
+
+- Change Password
+  - Endpoint: `PATCH /profile/change-password`
+  - Request Body:
+    ```json
+    {
+      "current_password": "currentpassword",
+      "new_password": "newpassword",
+      "new_password_confirmation": "newpassword"
+    }
+    ```
+  - Authentication: Bearer token
