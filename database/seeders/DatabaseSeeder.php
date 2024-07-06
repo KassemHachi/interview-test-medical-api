@@ -20,13 +20,13 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'patient@example.com',
             'phone' => '1234567890',
-            'type' => UserTypeEnum::PATIENT->value
+            'type' => UserTypeEnum::PATIENT->value,
         ]);
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'doctor@example.com',
             'phone' => '1234567800',
-            'type' => UserTypeEnum::DOCTOR->value
+            'type' => UserTypeEnum::DOCTOR->value,
         ]);
     }
 }

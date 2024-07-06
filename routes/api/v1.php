@@ -8,17 +8,15 @@ use App\Http\Controllers\MedicationController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
     Route::middleware('auth:sanctum')->post('send-verification-email', [AuthController::class, 'sendVerificationEmail']);
-    Route::post('verify-pin-email/{pin}', [AuthController::class, 'verifyPinEmail'])->name("verify-pin-email");
+    Route::post('verify-pin-email/{pin}', [AuthController::class, 'verifyPinEmail'])->name('verify-pin-email');
     Route::post('forget-password', [AuthController::class, 'forgetPassword']);
-    Route::post('reset-password/{pin}', [AuthController::class, 'resetPassword'])->name("reset-password");
+    Route::post('reset-password/{pin}', [AuthController::class, 'resetPassword'])->name('reset-password');
 });
 
 Route::middleware('auth:sanctum')->prefix('profile')->group(function () {

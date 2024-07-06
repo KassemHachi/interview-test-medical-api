@@ -23,14 +23,14 @@ class UpdatePrescriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => ['required','exists:users,id'],
-            'prescription_medications' => ['required','array','min:1'],
-            'prescription_medications.*.medication_id' => ['required','exists:medications,id'],
-            'prescription_medications.*.dosage' => ['required','string'],
-            'prescription_medications.*.frequency' => ['required','string'],
-            'prescription_medications.*.start_date' => ['required','date'],
-            'prescription_medications.*.end_date' => ['required','date', 'after_or_equal:prescription_medications.*.start_date'],
-            'notes' =>['string']
-         ];
+            'patient_id' => ['required', 'exists:users,id'],
+            'prescription_medications' => ['required', 'array', 'min:1'],
+            'prescription_medications.*.medication_id' => ['required', 'exists:medications,id'],
+            'prescription_medications.*.dosage' => ['required', 'string'],
+            'prescription_medications.*.frequency' => ['required', 'string'],
+            'prescription_medications.*.start_date' => ['required', 'date'],
+            'prescription_medications.*.end_date' => ['required', 'date', 'after_or_equal:prescription_medications.*.start_date'],
+            'notes' => ['string'],
+        ];
     }
 }

@@ -23,10 +23,10 @@ class CreateMedicalHistoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id'=> ['required','exists:users,id'],
-            'diagnosis'=> ['required','string'],
-            'treatment'=> ['required','string'],
-            'notes'=> ['string'],
+            'patient_id' => ['required', 'exists:users,id'],
+            'diagnosis' => ['required', 'string'],
+            'treatment' => ['required', 'string'],
+            'notes' => ['string'],
         ];
     }
 }
