@@ -1,97 +1,156 @@
-<div align="center" id="top"> 
-  <img src="./.github/app.gif" alt="Interview Test Medical Appointment" />
+# Doctor's Office Management System API
 
-&#xa0;
+This is a RESTful API for managing a doctor's office, developed using Laravel. The API provides endpoints for managing authentication, doctors, patients, appointments, prescriptions, medical histories, and medications.
 
-  <!-- <a href="https://interviewtestmedicalappointment.netlify.app">Demo</a> -->
-</div>
+## Table of Contents
 
-<h1 align="center">Interview Test Medical Appointment</h1>
+-   [Installation](#installation)
+-   [Configuration](#configuration)
+-   [Usage](#usage)
+    -   [Authentication](#authentication)
+    -   [Doctors](#doctors)
+    -   [Patients](#patients)
+    -   [Appointments](#appointments)
+    -   [Prescriptions](#prescriptions)
+    -   [Medical Histories](#medical-histories)
+    -   [Medications](#medications)
+    -   [Profile](#profile)
 
-<p align="center">
-  <img alt="Github top language" src="https://img.shields.io/github/languages/top/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment?color=56BEB8">
+## Installation
 
-  <img alt="Github language count" src="https://img.shields.io/github/languages/count/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment?color=56BEB8">
+1. Clone the repository:
 
-  <img alt="Repository size" src="https://img.shields.io/github/repo-size/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment?color=56BEB8">
+    ```bash
+    git clone https://github.com/yourusername/doctor-office-management.git
+    cd doctor-office-management
+    ```
 
-  <img alt="License" src="https://img.shields.io/github/license/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment?color=56BEB8">
+2. Install the dependencies:
 
-  <!-- <img alt="Github issues" src="https://img.shields.io/github/issues/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment?color=56BEB8" /> -->
+    ```bash
+    composer install
+    ```
 
-  <!-- <img alt="Github forks" src="https://img.shields.io/github/forks/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment?color=56BEB8" /> -->
+3. Set up the environment variables:
 
-  <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment?color=56BEB8" /> -->
-</p>
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
-<!-- Status -->
+4. Configure your database in the `.env` file:
 
-<!-- <h4 align="center">
-	🚧  Interview Test Medical Appointment 🚀 Under construction...  🚧
-</h4>
+5. Set up the environment variables:
 
-<hr> -->
+    ```bash
+    php artisan migrate --seed
+    ```
 
-<p align="center">
-  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
-  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
-  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
-  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
-  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
-  <a href="#memo-license">License</a> &#xa0; | &#xa0;
-  <a href="https://github.com/{{YOUR_GITHUB_USERNAME}}" target="_blank">Author</a>
-</p>
+6. Start the development server
 
-<br>
+    ```bash
+    php artisan serve
+    ```
 
-## :dart: About
+## Configuration
 
-Describe your project
+Ensure you configure the following environment variables in your `.env` file:
 
-## :sparkles: Features
 
-:heavy_check_mark: Feature 1;\
-:heavy_check_mark: Feature 2;\
-:heavy_check_mark: Feature 3;
+    DB_CONNECTION
+    DB_HOST
+    DB_PORT
+    DB_DATABASE
+    DB_USERNAME
+    DB_PASSWORD
 
-## :rocket: Technologies
 
-The following tools were used in this project:
+## Usage
 
--   [Expo](https://expo.io/)
--   [Node.js](https://nodejs.org/en/)
--   [React](https://pt-br.reactjs.org/)
--   [React Native](https://reactnative.dev/)
--   [TypeScript](https://www.typescriptlang.org/)
+### Authentication
 
-## :white_check_mark: Requirements
+-   Register a new user
+    -    Endpoint: `POST /auth/register`
+    -    Request Body:
+            ```json
+                 {
+                      "name": "User Name",
+                      "email": "patient@test.com",
+                      "password": "password",
+                      "password_confirmation": "password",
+                      "type": "patient",
+                      "phone": "0123456789"
+                 }
+            ``` 
+-   Login
+    -    Endpoint: `POST /auth/login`
+    -    Request Body:
+          ```json
+                  {
+                      "email": "doctor@example.com",
+                      "password": "password"
+                  }
+            ```
+          
+-   Logout
+    -    Endpoint: `POST /auth/logout`
+    -    Authentication: Bearer token
 
-Before starting :checkered_flag:, you need to have [Git](https://git-scm.com) and [Node](https://nodejs.org/en/) installed.
+-   Forgot Password
+    -    Endpoint: `POST /auth/forgot-password`
 
-## :checkered_flag: Starting
+-   Reset Password
+    -    Endpoint: `PATCH /auth/reset-password`
 
-```bash
-# Clone this project
-$ git clone https://github.com/{{YOUR_GITHUB_USERNAME}}/interview-test-medical-appointment
+-   Verify Email
+    -    Endpoint: `POST /auth/verify-email`
 
-# Access
-$ cd interview-test-medical-appointment
+-   Send Verification Email
+    -    Endpoint: `POST /auth/send-verification-email`
+    -    Authentication: Bearer token
 
-# Install dependencies
-$ yarn
-
-# Run the project
-$ yarn start
-
-# The server will initialize in the <http://localhost:3000>
-```
-
-## :memo: License
-
-This project is under license from MIT. For more details, see the [LICENSE](LICENSE.md) file.
-
-Made with :heart: by <a href="https://github.com/{{KassemHachi}}" target="_blank">{{YOUR_NAME}}</a>
-
-&#xa0;
-
-<a href="#top">Back to top</a>
+### Doctors
+-   Get One Doctor
+    -    Endpoint: `GET /doctors/{id}`
+    -    Authentication: Bearer token
+ 
+ -   Get All Doctors
+    -    Endpoint: `GET /doctors/`
+    -    Authentication: Bearer token
+ 
+### Patients
+-   Get One Patient
+    -    Endpoint: `GET /patients/{id}`
+    -    Authentication: Bearer token
+ 
+-   Get All Patients
+    -    Endpoint: `GET /patients/`
+    -    Authentication: Bearer token
+ 
+### Appointments
+-   Create Appointment
+    -    Endpoint: `POST /appointments`
+    -    Request Body:
+            ```json
+                 {
+                      "patient_id": 1,
+                      "date": "2024-07-03",
+                      "time": "07:25:00",
+                      "reason": "test reason"
+                 }
+    -    Authentication: Bearer token
+ 
+-   Update Appointment
+    -    Endpoint: `PATCH /appointments/{id}`
+    -    Request Body:
+            ```json
+                 {
+                      "patient_id": 1,
+                      "date": "2024-07-03",
+                      "time": "07:25:00",
+                      "reason": "test reason"
+                 }
+    -    Authentication: Bearer token
+-   Get One Appointment
+    -    Endpoint: `GET /appointments/{id}`
+    -    Authentication: Bearer token
