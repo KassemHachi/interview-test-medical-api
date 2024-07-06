@@ -29,8 +29,8 @@ This project requires the following to run:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/yourusername/doctor-office-management.git
-    cd doctor-office-management
+    git clone https://github.com/KassemHachi/interview-test-medical-api/.git
+    cd interview-test-medical-api
     ```
 
 2. Install the dependencies:
